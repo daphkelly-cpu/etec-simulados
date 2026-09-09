@@ -39,7 +39,7 @@ const SupabaseProgresso = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.supabaseKey}`
+          'apikey': this.supabaseKey
         },
         body: JSON.stringify(dados)
       });
@@ -59,7 +59,7 @@ const SupabaseProgresso = {
         `${this.supabaseUrl}/rest/v1/simulados?order=data_realizacao.desc`,
         {
           headers: {
-            'Authorization': `Bearer ${this.supabaseKey}`
+            'apikey': this.supabaseKey
           }
         }
       );
@@ -87,7 +87,7 @@ const SupabaseProgresso = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.supabaseKey}`
+          'apikey': this.supabaseKey
         },
         body: JSON.stringify(dados)
       });
@@ -107,7 +107,7 @@ const SupabaseProgresso = {
         `${this.supabaseUrl}/rest/v1/progresso_plano?order=numero_semana.asc`,
         {
           headers: {
-            'Authorization': `Bearer ${this.supabaseKey}`
+            'apikey': this.supabaseKey
           }
         }
       );
@@ -136,7 +136,7 @@ const SupabaseProgresso = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.supabaseKey}`
+          'apikey': this.supabaseKey
         },
         body: JSON.stringify(dados)
       });
@@ -155,7 +155,7 @@ const SupabaseProgresso = {
         `${this.supabaseUrl}/rest/v1/para_revisar?revisada=eq.false`,
         {
           headers: {
-            'Authorization': `Bearer ${this.supabaseKey}`
+            'apikey': this.supabaseKey
           }
         }
       );

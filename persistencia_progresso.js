@@ -144,7 +144,7 @@ const ProgressoPersistencia = {
     localStorage.setItem('questoes_para_revisar', JSON.stringify(para_revisar));
   },
   
-  marcarComoBR evisada(questaoId) {
+  marcarComoRevisada(questaoId) {
     let para_revisar = this.obterParaRevisar();
     const questao = para_revisar.find(q => q.questaoId === questaoId);
     if (questao) {
