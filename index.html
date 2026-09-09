@@ -1908,5 +1908,22 @@
             setInterval(updateCountdown, 1000 * 60 * 60);
         });
     </script>
+
+    <!-- Persistência de Progresso do Simulado -->
+    <script src="persistencia_progresso.js"></script>
+    
+    <script>
+        // Integração da persistência com os simulados
+        // Os dados serão salvos automaticamente no localStorage
+        
+        // Quando iniciar simulado:
+        // ProgressoPersistencia.iniciarSimulado('prova_1');
+        
+        // Quando marcar resposta:
+        // ProgressoPersistencia.salvarRespostaSimulado(questaoId, alternativaSelecionada);
+        
+        // Quando finalizar simulado:
+        // const resultado = ProgressoPersistencia.finalizarSimulado(provaId, gabarito, tempoGasto);
+    </script>
 </body>
 </html>
