@@ -276,6 +276,93 @@
             text-decoration: line-through;
         }
 
+        /* CARDS DE ESTATÍSTICAS E PROGRESSO */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-card .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .progress-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .progress-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .progress-bar-container {
+            background: #f0f0f0;
+            border-radius: 10px;
+            height: 30px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #4CAF50 0%, #45B7D1 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .historico-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .historico-table th {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+            color: #333;
+        }
+
+        .historico-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        .historico-table tr:hover {
+            background: #f9f9f9;
+        }
+
         /* VÍDEOS */
         .videos-section {
             margin-top: 20px;
@@ -468,6 +555,66 @@
         <!-- CONTEÚDO -->
         <div id="overview" class="tab-content active">
             <h2 style="margin-bottom: 20px; color: #333;">📊 Visão Geral do Plano</h2>
+            
+            <!-- CARDS DE ESTATÍSTICAS (PASSO 7) -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>📈 Simulados</h3>
+                    <div class="stat-number" id="stat-simulados">0</div>
+                    <p style="font-size: 13px; opacity: 0.9;">realizados</p>
+                </div>
+                <div class="stat-card">
+                    <h3>📊 Média Geral</h3>
+                    <div class="stat-number" id="stat-media">0%</div>
+                    <p style="font-size: 13px; opacity: 0.9;">de acertos</p>
+                </div>
+                <div class="stat-card">
+                    <h3>✅ Acertos</h3>
+                    <div class="stat-number" id="stat-acertos">0</div>
+                    <p style="font-size: 13px; opacity: 0.9;">questões</p>
+                </div>
+                <div class="stat-card">
+                    <h3>🏆 Melhor Score</h3>
+                    <div class="stat-number" id="stat-melhor">0%</div>
+                    <p style="font-size: 13px; opacity: 0.9;">máximo</p>
+                </div>
+            </div>
+
+            <!-- PROGRESSO DO PLANO (PASSO 7) -->
+            <div class="progress-card">
+                <h3>📅 Progresso do Plano (12 Semanas)</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%">
+                        <span id="progress-text">0%</span>
+                    </div>
+                </div>
+                <p style="color: #666; font-size: 14px;">
+                    Semanas completas: <strong id="semanas-count">0</strong>/12
+                </p>
+            </div>
+
+            <!-- HISTÓRICO DE SIMULADOS (PASSO 7) -->
+            <div class="progress-card">
+                <h3>📈 Histórico de Simulados</h3>
+                <table class="historico-table">
+                    <thead>
+                        <tr>
+                            <th>Prova</th>
+                            <th>Data</th>
+                            <th>Score</th>
+                            <th>Acertos</th>
+                            <th>Tempo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-historico">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #999; padding: 30px;">
+                                Nenhum simulado realizado ainda
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
             <div class="overview-grid">
                 <div class="overview-card">
@@ -1686,6 +1833,59 @@
 
             </div>
 
+            <!-- PASSO 7: Card de Estatísticas do Supabase -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin: 30px 0; box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);">
+                <h3 style="margin-bottom: 20px; font-size: 20px;">📊 Suas Estatísticas (Carregadas do Supabase)</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: bold;" id="stat-simulados">0</div>
+                        <div style="font-size: 14px; opacity: 0.9; margin-top: 8px;">Simulados Realizados</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: bold;" id="stat-media">0%</div>
+                        <div style="font-size: 14px; opacity: 0.9; margin-top: 8px;">Média Geral</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: bold;" id="stat-acertos">0</div>
+                        <div style="font-size: 14px; opacity: 0.9; margin-top: 8px;">Total de Acertos</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: bold;" id="stat-melhor">0%</div>
+                        <div style="font-size: 14px; opacity: 0.9; margin-top: 8px;">Melhor Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASSO 8: Tabela de Histórico -->
+            <div style="background: white; padding: 25px; border-radius: 10px; margin: 30px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <h3 style="margin-bottom: 20px; color: #333; font-size: 18px;">📈 Histórico de Simulados</h3>
+                <div style="overflow-x: auto;">
+                    <table id="tabela-historico" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8f9fa; border-bottom: 2px solid #e0e0e0;">
+                                <th style="padding: 12px; text-align: left; color: #333; font-weight: 600;">Prova</th>
+                                <th style="padding: 12px; text-align: left; color: #333; font-weight: 600;">Data</th>
+                                <th style="padding: 12px; text-align: center; color: #333; font-weight: 600;">Score</th>
+                                <th style="padding: 12px; text-align: center; color: #333; font-weight: 600;">Acertos</th>
+                                <th style="padding: 12px; text-align: center; color: #333; font-weight: 600;">Tempo</th>
+                            </tr>
+                        </thead>
+                        <tbody style="color: #666;">
+                            <tr style="border-bottom: 1px solid #e0e0e0;"><td colspan="5" style="padding: 20px; text-align: center; color: #999;">Carregando histórico...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PASSO 9: Progresso do Plano -->
+            <div style="background: white; padding: 25px; border-radius: 10px; margin: 30px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <h3 style="margin-bottom: 20px; color: #333; font-size: 18px;">📅 Progresso do Plano de 12 Semanas</h3>
+                <div style="background: #f8f9fa; height: 30px; border-radius: 15px; overflow: hidden; margin-bottom: 15px;">
+                    <div id="progress-fill" style="height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); width: 0%; transition: width 0.3s ease;"></div>
+                </div>
+                <p style="color: #666; text-align: center;">Semanas completas: <strong id="semanas-count" style="color: #667eea;">0</strong>/12</p>
+            </div>
+
             <div style="background: #f0f7ff; padding: 20px; border-radius: 10px; margin-top: 30px; border-left: 4px solid #2196F3;">
                 <h4 style="margin-bottom: 10px; color: #1976D2;">📊 Seu Desempenho nos Simulados</h4>
                 <p style="color: #666; margin-bottom: 15px;">Acompanhe seu progresso ao fazer os simulados:</p>
@@ -1909,21 +2109,154 @@
         });
     </script>
 
-    <!-- Persistência de Progresso do Simulado -->
+    <!-- Persistência de Progresso: localStorage + Supabase -->
     <script src="persistencia_progresso.js"></script>
+    <script src="supabase_progresso_configurado.js"></script>
     
     <script>
-        // Integração da persistência com os simulados
-        // Os dados serão salvos automaticamente no localStorage
+        // ===== INTEGRAÇÃO SUPABASE PASSOS 5 E 6 =====
         
-        // Quando iniciar simulado:
-        // ProgressoPersistencia.iniciarSimulado('prova_1');
+        // Inicializar Supabase quando página carrega
+        window.addEventListener('load', async () => {
+            console.log('🚀 Supabase inicializado e pronto para salvar dados');
+        });
         
-        // Quando marcar resposta:
-        // ProgressoPersistencia.salvarRespostaSimulado(questaoId, alternativaSelecionada);
+        // Função para salvar simulado no Supabase (chamar quando finalizar simulado)
+        async function salvarSimuladoSupabase(provaId, respostasUsuario, gabarito, tempoGasto) {
+            try {
+                console.log('💾 Salvando simulado no Supabase...');
+                await SupabaseProgresso.salvarSimulado(provaId, respostasUsuario, gabarito, tempoGasto);
+                console.log('✅ Simulado salvo com sucesso!');
+                
+                // Também salvar no localStorage como backup
+                ProgressoPersistencia.finalizarSimulado(provaId, gabarito, tempoGasto);
+                
+            } catch (error) {
+                console.error('❌ Erro ao salvar simulado:', error);
+                // Fallback: salvar apenas no localStorage
+                ProgressoPersistencia.finalizarSimulado(provaId, gabarito, tempoGasto);
+            }
+        }
         
-        // Quando finalizar simulado:
-        // const resultado = ProgressoPersistencia.finalizarSimulado(provaId, gabarito, tempoGasto);
+        // Função para marcar semana como completa no Supabase
+        async function marcarSemanaCompletoSupabase(numeroSemana) {
+            try {
+                console.log(`📅 Marcando semana ${numeroSemana} como completa...`);
+                await SupabaseProgresso.marcarSemanaCompleta(numeroSemana);
+                
+                // Também salvar no localStorage
+                ProgressoPersistencia.marcarSemanaCompleta(numeroSemana);
+                
+                console.log(`✅ Semana ${numeroSemana} marcada!`);
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                ProgressoPersistencia.marcarSemanaCompleta(numeroSemana);
+            }
+        }
+        
+        // Função para marcar questão como para revisar
+        async function marcarQuestaoParaRevisarSupabase(questaoId, provaId) {
+            try {
+                await SupabaseProgresso.marcarParaRevisar(questaoId, provaId);
+                ProgressoPersistencia.marcarParaRevisar(questaoId, provaId);
+                console.log('✅ Questão marcada para revisar');
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                ProgressoPersistencia.marcarParaRevisar(questaoId, provaId);
+            }
+        }
+        
+        // Função para carregar e exibir estatísticas
+        async function carregarEstatisticasSupabase() {
+            try {
+                const stats = await SupabaseProgresso.obterEstatisticas();
+                
+                if (stats) {
+                    console.log('📊 Estatísticas carregadas:', stats);
+                    
+                    // Atualizar elementos HTML se existirem
+                    const elemSimulados = document.getElementById('stat-simulados');
+                    const elemMedia = document.getElementById('stat-media');
+                    const elemAcertos = document.getElementById('stat-acertos');
+                    const elemMelhor = document.getElementById('stat-melhor');
+                    
+                    if (elemSimulados) elemSimulados.textContent = stats.simulados_realizados;
+                    if (elemMedia) elemMedia.textContent = stats.media_geral + '%';
+                    if (elemAcertos) elemAcertos.textContent = stats.acertos_total;
+                    if (elemMelhor) elemMelhor.textContent = stats.melhor_score + '%';
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar estatísticas:', error);
+            }
+        }
+        
+        // Função para carregar histórico de simulados
+        async function carregarHistoricoSupabase() {
+            try {
+                const simulados = await SupabaseProgresso.obterTodosSimulados();
+                
+                if (simulados && simulados.length > 0) {
+                    console.log('📈 Histórico carregado:', simulados);
+                    
+                    // Se houver tabela HTML, preenchê-la
+                    const tbody = document.querySelector('#tabela-historico tbody');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        
+                        simulados.forEach(sim => {
+                            const data = new Date(sim.data_realizacao).toLocaleDateString('pt-BR');
+                            const tempo = Math.round(sim.tempo_gasto / 60) + ' min';
+                            
+                            const linha = document.createElement('tr');
+                            linha.innerHTML = `
+                                <td>${sim.prova_id}</td>
+                                <td>${data}</td>
+                                <td>${sim.score_percentual}%</td>
+                                <td>${sim.acertos}/${sim.total}</td>
+                                <td>${tempo}</td>
+                            `;
+                            
+                            tbody.appendChild(linha);
+                        });
+                    }
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar histórico:', error);
+            }
+        }
+        
+        // Função para carregar e exibir progresso do plano
+        async function atualizarProgressoPlanoSupabase() {
+            try {
+                const progresso = await SupabaseProgresso.obterProgressoPlano();
+                const semanasCompletas = progresso.filter(s => s.completa).length;
+                const percentual = (semanasCompletas / 12) * 100;
+                
+                document.getElementById('progress-fill').style.width = percentual + '%';
+                document.getElementById('progress-text').textContent = Math.round(percentual) + '%';
+                document.getElementById('semanas-count').textContent = semanasCompletas;
+                
+                console.log(`📅 Progresso: ${semanasCompletas}/12 semanas (${percentual.toFixed(1)}%)`);
+            } catch (error) {
+                console.error('❌ Erro ao atualizar progresso:', error);
+            }
+        }
+        
+        // Carregar dados ao iniciar
+        window.addEventListener('load', () => {
+            carregarEstatisticasSupabase();
+            carregarHistoricoSupabase();
+            atualizarProgressoPlanoSupabase();
+        });
+        
+        // RESUMO DE USO:
+        // Para salvar simulado: salvarSimuladoSupabase('prova_1', respostas, gabarito, tempo);
+        // Para marcar semana: marcarSemanaCompletoSupabase(1);
+        // Para marcar para revisar: marcarQuestaoParaRevisarSupabase('q_5', 'prova_1');
+        // Para carregar estatísticas: carregarEstatisticasSupabase();
+        // Para carregar histórico: carregarHistoricoSupabase();
     </script>
 </body>
 </html>
